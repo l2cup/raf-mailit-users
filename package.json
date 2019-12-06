@@ -1,0 +1,24 @@
+{
+  "name": "mailit-users",
+  "version": "1.0.0",
+  "description": "Mailit users is a users service for the raf-mailit project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "raf-mailit"
+  ],
+  "author": "Uros Nikolic",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.7",
+    "cuid": "^2.1.6",
+    "email-validator": "^2.0.4"
+  }
+}
