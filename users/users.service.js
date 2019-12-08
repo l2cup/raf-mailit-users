@@ -4,15 +4,18 @@ const Model = require('./users.model.js');
 
 
 const {
-  buildMakeUser, buildDeleteUser, buildFindUser, buildUpdateUser,
+  buildMakeUser, buildDeleteUser, buildFindUser, buildFindAll, buildUpdateUser,
 } = require('./users.build.js');
 
 const SubscriptionTimeValidator = Object.freeze({
   validate: (time) => {
-    if (!(time instanceof Number)) {
+    // eslint-disable-next-line no-restricted-globals
+    if (isNaN(time)) {
+      console.log(typeof time);
+      console.log(time instanceof Number);
       return false;
     }
-    if (time === 1 || (time < 25 && time > 0 && time !== 18 && time % 6 === 0)) {
+    if (time === 1 || time === 6 || time === 12 || time === 24) {
       return true;
     }
     return false;
@@ -23,6 +26,8 @@ const deleteUser = buildDeleteUser({ Model });
 
 const findUser = buildFindUser({ Model });
 
+const findAll = buildFindAll({ Model });
+
 const updateUser = buildUpdateUser({ Model, EmailValidator, SubscriptionTimeValidator });
 
 const makeUser = buildMakeUser({
@@ -31,5 +36,5 @@ const makeUser = buildMakeUser({
 
 
 module.exports = {
-  makeUser, deleteUser, findUser, updateUser, SubscriptionTimeValidator,
+  makeUser, deleteUser, findUser, findAll, updateUser, SubscriptionTimeValidator,
 };

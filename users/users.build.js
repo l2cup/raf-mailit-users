@@ -6,7 +6,7 @@ function buildMakeUser({
     password,
     email,
     subscriptions,
-    subscriptionTime = 0,
+    subscriptionTime,
   } = {}) {
     if (!username) {
       throw new Error('User must have an username.');
@@ -53,6 +53,13 @@ function buildFindUser({ Model }) {
   };
 }
 
+function buildFindAll({ Model }) {
+  return async function findAll(object) {
+    const users = await Model.find(object);
+    return users;
+  };
+}
+
 
 function buildUpdateUser({ Model, EmailValidator, SubscriptionTimeValidator }) {
   return async function updateUser(object, updated) {
@@ -70,5 +77,5 @@ function buildUpdateUser({ Model, EmailValidator, SubscriptionTimeValidator }) {
 }
 
 module.exports = {
-  buildMakeUser, buildDeleteUser, buildFindUser, buildUpdateUser,
+  buildMakeUser, buildDeleteUser, buildFindUser, buildFindAll, buildUpdateUser,
 };
