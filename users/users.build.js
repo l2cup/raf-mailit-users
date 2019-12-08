@@ -6,7 +6,7 @@ function buildMakeUser({
     password,
     email,
     subscriptions,
-    subscriptionTime = 1,
+    subscriptionTime = 0,
   } = {}) {
     if (!username) {
       throw new Error('User must have an username.');
