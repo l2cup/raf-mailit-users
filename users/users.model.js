@@ -26,7 +26,18 @@ const UserSchema = mongoose.Schema({
     maxLength: 40,
     required: true,
   },
-  subscriptions: [String],
+  subscriptions: [{
+    name: {
+      type: String,
+      trim: true,
+      minLength: 3,
+      required: true,
+    },
+    parameters: {
+      type: Map,
+      of: String,
+    },
+  }],
   subscriptionTime: {
     type: Number,
     min: 1,

@@ -19,7 +19,6 @@ app.use('/', router);
 
 app.listen(PORT);
 
-
 mongoose.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (() => {
   console.log('connected');
 }));

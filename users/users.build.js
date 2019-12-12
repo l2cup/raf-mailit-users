@@ -60,7 +60,6 @@ function buildFindAll({ Model }) {
   };
 }
 
-
 function buildUpdateUser({ Model, EmailValidator, SubscriptionTimeValidator }) {
   return async function updateUser(object, updated) {
     // eslint-disable-next-line no-param-reassign

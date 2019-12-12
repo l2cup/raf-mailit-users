@@ -11,13 +11,11 @@ async function getUsersAll(req, res, next) {
     next(err);
   }
 }
-
 /**
  * GET request for users by subscriptionTime
  */
 async function getUsersBySubscriptionTime(req, res, next) {
   try {
-    console.log(`${req.params.subscriptionTime}`);
     const user = await userService.findAll({ subscriptionTime: `${req.params.subscriptionTime}` });
     res.json(user);
   } catch (err) {
@@ -34,6 +32,25 @@ async function getUserSubscriptions(req, res, next) {
   }
 }
 
+async function getUserInformation(req, res, next) {
+  try {
+    const user = await userService.findUser({ username: `${req.params.username}` });
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function postUserSubscriptions(req, res, next) {
+  try {
+    const user = await userService.findUser({ username: `${req.body.username}` });
+    const ret = await userService.updateUser(user, { subscriptions: req.body.subscriptions });
+    res.json(ret);
+  } catch (err) {
+    next(err);
+  }
+}
+
 async function login(req, res, next) {
   try {
     const user = await userService.findUser({ username: `${req.body.username}` });
@@ -43,10 +60,7 @@ async function login(req, res, next) {
 
 
     const valid = await Hash.checkPassword(`${req.body.password}`, user.password);
-    if (!valid) {
-      next(new Error('User not registered'));
-    }
-    res.json(valid);
+    res.json({ id: user.id, authorization: valid });
   } catch (err) {
     next(err);
   }
@@ -59,24 +73,29 @@ async function register(req, res, next) {
       next(new Error('User already registered'));
     }
 
-    console.log(req.body.username);
-    console.log(typeof req.body.username);
     const newUser = await userService.makeUser({
       username: req.body.username,
       password: req.body.password,
       email: req.body.email,
       subscriptions: req.body.subscriptions,
-      subscriptionTime: Number.parseInt(req.body.subscriptionTime),
+      subscriptionTime: Number.parseInt(req.body.subscriptionTime, 10),
     });
 
     newUser.save();
-    res.json(newUser);
+    res.json({ registered: true, id: newUser.id });
   } catch (err) {
+    res.json({ registered: false });
     next(err);
   }
 }
 
 
 module.exports = {
-  getUsersAll, getUsersBySubscriptionTime, getUserSubscriptions, login, register,
+  getUsersAll,
+  getUsersBySubscriptionTime,
+  getUserSubscriptions,
+  getUserInformation,
+  postUserSubscriptions,
+  login,
+  register,
 };

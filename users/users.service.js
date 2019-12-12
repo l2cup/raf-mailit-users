@@ -11,8 +11,6 @@ const SubscriptionTimeValidator = Object.freeze({
   validate: (time) => {
     // eslint-disable-next-line no-restricted-globals
     if (isNaN(time)) {
-      console.log(typeof time);
-      console.log(time instanceof Number);
       return false;
     }
     if (time === 1 || time === 6 || time === 12 || time === 24) {
