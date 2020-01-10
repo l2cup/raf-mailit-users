@@ -16,7 +16,7 @@ async function getUsersAll(req, res, next) {
  */
 async function getUsersBySubscriptionTime(req, res, next) {
   try {
-    const user = await userService.findAll({ subscriptionTime: `${req.params.subscriptionTime}` });
+    const user = await userService.findAll({ subscriptionTime: { $lte: `${req.params.subscriptionTime}` } });
     res.json(user);
   } catch (err) {
     next(err);

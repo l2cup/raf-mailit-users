@@ -34,8 +34,7 @@ const UserSchema = mongoose.Schema({
       required: true,
     },
     parameters: {
-      type: Map,
-      of: String,
+      type: Array,
     },
   }],
   subscriptionTime: {
